@@ -64,6 +64,7 @@
         .customer-cell { color: var(--accent-purple); font-weight: 500; }
         .num-cell { text-align: right; font-variant-numeric: tabular-nums; font-weight: 500; }
         .excess-cell { text-align: right; font-weight: 700; color: var(--accent-red); }
+        .amount-cell { text-align: right; color: var(--accent-amber); font-weight: 600; font-variant-numeric: tabular-nums; }
         .zero-plan { color: var(--accent-red); font-weight: 600; display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
         .zero-plan::before { content: '⚠'; font-size: 12px; }
         .rank-badge { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 6px; font-size: 11px; font-weight: 700; }
@@ -159,7 +160,7 @@
                 <table>
                     <thead><tr>
                         <th>순위</th><th>자재품번</th><th>품명</th><th>고객사</th><th>적용모델</th>
-                        <th style="text-align:right">4M 계획</th><th style="text-align:right">잔여(Excess)</th>
+                        <th style="text-align:right">4M 계획</th><th style="text-align:right">잔여(Excess)</th><th style="text-align:right">금액(￦)</th>
                     </tr></thead>
                     <tbody id="unsoldTable"></tbody>
                 </table>
@@ -198,21 +199,21 @@ const D = [
 
 // 4M 계획 有이지만 6월까지 소진 불가 Top 15
 const U = [
-    { code:'1501046-C01', name:'PCB', customer:'VD', model:'L55S6_DVD_심양_[A]', plan:30000, junExcess:58518 },
-    { code:'1501027-B10', name:'PCB', customer:'Coway', model:'PN049BCW-VF(M)_심양_[A]', plan:2103, junExcess:25805 },
-    { code:'1500587-A01', name:'PCB', customer:'VD', model:'A5919_KPNL_심양_[B]', plan:5025, junExcess:15176 },
-    { code:'1500777-C01', name:'PCB', customer:'VD', model:'P270NQ_TPN_심양_[A]', plan:22672, junExcess:12635 },
-    { code:'1501181-B10', name:'PCB', customer:'VD', model:'L55S8_HVD_심양_[A]', plan:253390, junExcess:10086 },
-    { code:'1501000-B01', name:'PCB', customer:'VD', model:'L50F7_DPN_심양_[A]', plan:4781, junExcess:7507 },
-    { code:'1500632-E01', name:'PCB', customer:'Coway', model:'PN048WWJ-VF(A)_심양_[B]', plan:1004, junExcess:7428 },
-    { code:'1500862-C20', name:'PCB', customer:'Coway', model:'PN018ACW-PLASMA_심양_[A]', plan:1375, junExcess:5230 },
-    { code:'1500579-A10', name:'PCB', customer:'HP', model:'PN032SPR-HV_심양_[B]', plan:10, junExcess:4926 },
-    { code:'1500999-B01', name:'PCB', customer:'VD', model:'L43F7_DPN_심양_[A]', plan:7781, junExcess:4035 },
-    { code:'1500759-A01', name:'PCB', customer:'Coway', model:'PN105WCW-VF(C)_심양_[C]', plan:182, junExcess:3756 },
-    { code:'1501009-B31', name:'PCB', customer:'대덕', model:'PLN073-B4025250N2W-565_심양_[A]', plan:600, junExcess:3661 },
-    { code:'1500961-B01', name:'PCB', customer:'VD', model:'P230NQ_TPN_심양_[A]', plan:67729, junExcess:3374 },
-    { code:'1500911-A01', name:'PCB', customer:'Coway', model:'PN050DCW-FILTER_심양_[A]', plan:2700, junExcess:3256 },
-    { code:'1500918-C10', name:'PCB', customer:'대덕', model:'PLN072-T0805650N2R-565_심양_[A]', plan:1300, junExcess:3102 },
+    { code:'1501046-C01', name:'PCB', customer:'VD', model:'L55S6_DVD_심양_[A]', plan:30000, junExcess:58518, amount:60157078 },
+    { code:'1501027-B10', name:'PCB', customer:'Coway', model:'PN049BCW-VF(M)_심양_[A]', plan:2103, junExcess:25805, amount:12685329 },
+    { code:'1500587-A01', name:'PCB', customer:'VD', model:'A5919_KPNL_심양_[B]', plan:5025, junExcess:15176, amount:3893925 },
+    { code:'1500777-C01', name:'PCB', customer:'VD', model:'P270NQ_TPN_심양_[A]', plan:22672, junExcess:12635, amount:24477832 },
+    { code:'1501181-B10', name:'PCB', customer:'VD', model:'L55S8_HVD_심양_[A]', plan:253390, junExcess:10086, amount:6570962 },
+    { code:'1501000-B01', name:'PCB', customer:'VD', model:'L50F7_DPN_심양_[A]', plan:4781, junExcess:7507, amount:15404870 },
+    { code:'1500632-E01', name:'PCB', customer:'Coway', model:'PN048WWJ-VF(A)_심양_[B]', plan:1004, junExcess:7428, amount:6495672 },
+    { code:'1500862-C20', name:'PCB', customer:'Coway', model:'PN018ACW-PLASMA_심양_[A]', plan:1375, junExcess:5230, amount:4106898 },
+    { code:'1500579-A10', name:'PCB', customer:'HP', model:'PN032SPR-HV_심양_[B]', plan:10, junExcess:4926, amount:846117 },
+    { code:'1500999-B01', name:'PCB', customer:'VD', model:'L43F7_DPN_심양_[A]', plan:7781, junExcess:4035, amount:5520061 },
+    { code:'1500759-A01', name:'PCB', customer:'Coway', model:'PN105WCW-VF(C)_심양_[C]', plan:182, junExcess:3756, amount:5709307 },
+    { code:'1501009-B31', name:'PCB', customer:'대덕', model:'PLN073-B4025250N2W-565_심양_[A]', plan:600, junExcess:3661, amount:8081352 },
+    { code:'1500961-B01', name:'PCB', customer:'VD', model:'P230NQ_TPN_심양_[A]', plan:67729, junExcess:3374, amount:6536462 },
+    { code:'1500911-A01', name:'PCB', customer:'Coway', model:'PN050DCW-FILTER_심양_[A]', plan:2700, junExcess:3256, amount:475131 },
+    { code:'1500918-C10', name:'PCB', customer:'대덕', model:'PLN072-T0805650N2R-565_심양_[A]', plan:1300, junExcess:3102, amount:702564 },
 ];
 
 // Table - Top 10
@@ -227,7 +228,7 @@ D.forEach((d,i) => {
 const ut = document.getElementById('unsoldTable');
 U.forEach((d,i) => {
     const rc = i<3?`rank-${i+1}`:'rank-rest';
-    ut.innerHTML += `<tr><td><span class="rank-badge ${rc}">${i+1}</span></td><td class="item-code">${d.code}</td><td class="item-name">${d.name}</td><td class="customer-cell">${d.customer}</td><td class="model-cell" title="${d.model}">${d.model}</td><td class="num-cell">${d.plan.toLocaleString()}</td><td class="excess-cell">${d.junExcess.toLocaleString()}</td></tr>`;
+    ut.innerHTML += `<tr><td><span class="rank-badge ${rc}">${i+1}</span></td><td class="item-code">${d.code}</td><td class="item-name">${d.name}</td><td class="customer-cell">${d.customer}</td><td class="model-cell" title="${d.model}">${d.model}</td><td class="num-cell">${d.plan.toLocaleString()}</td><td class="excess-cell">${d.junExcess.toLocaleString()}</td><td class="amount-cell">₩${d.amount.toLocaleString()}</td></tr>`;
 });
 
 // Gauges
